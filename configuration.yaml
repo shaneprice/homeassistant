@@ -1,0 +1,39 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+discovery:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+
+logger:
+  default: info
+
+notify:
+    platform: pushbullet
+    name: mypush
+    api_key: "o.qO9V317mDeDFTCkNra9YBZw3BFnHKjkf"
+
+remote:
+  - platform: harmony
+    name: Lounge remote
+    host: 192.168.2.7
