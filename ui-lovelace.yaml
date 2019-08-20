@@ -1,0 +1,120 @@
+title: Home
+resources:
+  - url: /local/aftership-card.js
+    type: module
+  - url: /local/weather-card.js
+    type: module
+  - url: /local/monster-card.js
+    type: js
+  - url: /local/auto-entities.js
+    type: js
+  - url: /local/card-tools.js
+    type: js
+  - url: /local/fold-entity-row.js
+    type: module
+
+views:
+  - badges: []
+    cards:
+        
+      - entity: weather.dark_sky
+        type: custom:weather-card
+      
+      - entity: sensor.aeon_labs_zw100_multisensor_6_temperature
+        graph: line
+        name: Tyler & Matilida's Room
+        type: sensor
+      - entity: sensor.aeon_labs_zw100_multisensor_6_temperature_2
+        graph: line
+        name: Georgina's Room
+        type: sensor
+      - entities:
+          - entity: zwave.aeon_labs_zw090_z_stick_gen5_au
+          - entity: zwave.aeon_labs_zw100_multisensor_6
+          - entity: zwave.aeon_labs_zw100_multisensor_6_2
+        show_header_toggle: false
+        title: Z-Wave Devices
+        type: entities
+      - entities:
+          - entity: switch.lounge
+          - entity: switch.georgina
+          - entity: switch.tyler_matildas
+        show_header_toggle: false
+        title: Switches
+        type: entities
+
+      - entity: sensor.aftership
+        name: Shipping
+        type: 'custom:aftership-card'
+
+
+      - type: custom:monster-card
+        show_empty: true
+        card:
+          type: glance
+          title: Low Battery Devices
+        filter:
+          include:
+            - entity_id: "*battery_level*"
+              state: '< 40'
+            - attributes:
+                battery: '< 40'
+            - attributes:
+                battery_level: '< 40'
+
+      - type: custom:monster-card
+        card:
+          type: entities
+          title: Things that are broken
+        filter:
+          include:
+            - state: "unknown"
+          exclude:
+            - entity_id: group.*
+
+      - type: custom:auto-entities
+        title: All Entities
+        card:
+          type: glance
+        filter:
+          include: [{}]
+          exclude:
+            - entity_id: "*yweather*"
+            - domain: group
+            - domain: zone
+
+
+
+      
+
+  
+  
+  
+  
+    path: default_view
+    title: Home
+  - badges:
+      - automation.motion
+    cards:
+      - entities:
+          - automation.lounge_light_off
+          - automation.sensor_auto_1
+          - automation.sensor_auto_2
+          - automation.motion
+          - automation.temp_above_19_2
+          - automation.lounge_light_on
+        title: Automation
+        type: entities
+    icon: castle
+    panel: true
+    path: geek
+    title: geek
+  - type: 'custom:aftership-card'
+    entity: sensor.aftership
+    title: Packages
+
+  #- !include lovelace/settings_view.yaml
+
+
+
+        

@@ -1,0 +1,9 @@
+switch.lounge:
+  friendly_name: Lounge Lamp
+  icon: mdi:floor-lamp
+switch.tyler_matildas:
+  friendly_name: Tyler & Matildas Heater
+  icon: mdi:radiator
+switch.georgina:
+  friendly_name: Georgina's Heater
+  icon: mdi:radiator
