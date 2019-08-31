@@ -62,3 +62,8 @@ remote:
   - platform: harmony
     name: Lounge
     host: !secret harmony_host
+
+camera:
+  - platform: uvc
+    nvr: 127.0.0.1
+    key: !secret unifi_camera_key

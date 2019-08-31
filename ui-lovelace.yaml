@@ -14,6 +14,8 @@ resources:
     type: module
 
 views:
+
+  #- !include lovelace/settings_view.yaml
   - badges: []
     cards:
         
@@ -113,7 +115,7 @@ views:
     entity: sensor.aftership
     title: Packages
 
-  #- !include lovelace/settings_view.yaml
+
 
 
 
