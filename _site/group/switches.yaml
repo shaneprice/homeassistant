@@ -1,0 +1,21 @@
+# Interior Switches:
+#     entities:
+#       - switch.kitchen_accent_1
+#       - switch.kitchen_accent_2
+#       - switch.front_door_outlet
+#       - switch.lr_amp
+#       - switch.master_bathroom_accent_1
+#       - switch.master_bathroom_accent_2
+#       - switch.pool_deck
+#       - switch.foyer_outlet
+#       - switch.den_outlet
+#       - switch.living_room_outlet
+  
+#   Kitchen Accents:
+#     entities:
+#       - switch.kitchen_accent_1
+#       - switch.kitchen_accent_2
+  
+  Laundry Accents:
+    entities:
+      - switch.nano_switch_laundry

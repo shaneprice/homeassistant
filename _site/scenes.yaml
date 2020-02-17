@@ -1,0 +1,11 @@
+- id: '1578042512543'
+  name: Good Night
+  entities:
+    switch.xmas_tree_power_switch_1:
+      friendly_name: Xmas Tree Switch 1
+      node_id: 9
+      power_consumption: 0
+      state: 'on'
+      value_id: '144115188231651328'
+      value_index: 0
+      value_instance: 2

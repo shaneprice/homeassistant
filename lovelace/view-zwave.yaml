@@ -1,0 +1,41 @@
+#title: Z-Wave
+#id: zwave
+#path: zwave
+#icon: mdi:z-wave
+#cards:
+  #- type: entities
+    # entities:
+    #   - binary_sensor.number_sign_switch
+    #   - type: divider
+    #   - binary_sensor.garden_lights_switch
+    #   - type: divider
+    #   - binary_sensor.cabinet_light_switch
+    #   - binary_sensor.tv_light_switch
+    #   - binary_sensor.livingroom_socket_switch
+    #   - binary_sensor.table_light_switch
+    #   - type: divider
+    #   - binary_sensor.vestibule_socket_switch
+    #   - binary_sensor.family_room_socket_switch
+    #   - binary_sensor.master_bedroom_socket_switch
+    #   - binary_sensor.second_bedroom_switch
+    #   - binary_sensor.spare_socket_switch
+    #   - binary_sensor.hall_downstairs_switch
+    #   - binary_sensor.front_bedroom_switch
+  #- type: entities
+   # entities:
+    
+   #   -  camera.camera_1
+    #  - type: divider
+     # - switch.lounge
+     # - type: divider
+     # - switch.georgina
+      #- type: divider
+      #- switch.tyler_matildas
+      # - type: divider
+      # - switch.vestibule_socket_switch
+      # - switch.family_room_socket_switch
+      # - switch.master_bedroom_socket_switch
+      # - switch.second_bedroom_switch
+      # - switch.spare_socket_switch
+      # - switch.hall_downstairs_switch
+      # - switch.front_bedroom_switch

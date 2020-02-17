@@ -1,0 +1,11 @@
+  
+motion:
+    name: Motion Detectors
+    entities:
+      - sensor.family_room_burglar
+      - sensor.tv_room_burglar
+    #   - binary_sensor.entry_alarm_panel
+    #   - binary_sensor.bedroom_alarm_panel
+    #   - binary_sensor.camera1_motion_sensor
+    #   - binary_sensor.camera2_motion_sensor
+    #   - binary_sensor.camera3_motion_sensor

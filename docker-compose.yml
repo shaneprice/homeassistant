@@ -2,83 +2,84 @@
 version: "2.1"
 
 services:
-  muximux:
-    image: linuxserver/muximux:latest
-    container_name: muximux
-    restart: always
-    network_mode: host
-    ports:
-      - 80:80
-    volumes:
-      - /home/$USER/docker_files/muximux:/config
-    environment:
-      - TZ=${TZ}
-      - PGID=1000
-      - PUID=1000
+  
+  # muximux:
+  #   image: linuxserver/muximux:latest
+  #   container_name: muximux
+  #   restart: always
+  #   network_mode: host
+  #   ports:
+  #     - 80:80
+  #   volumes:
+  #     - /home/$USER/docker_files/muximux:/config
+  #   environment:
+  #     - TZ=${TZ}
+  #     - PGID=1000
+  #     - PUID=1000
  
-  esphomeyaml: 
-    image: ottowinter/esphomeyaml:latest
-    container_name: esphomeyaml
-    command: esphomeyaml dashboard
-    restart: always
-    network_mode: host
-    ports:
-      - 6052:6052
-      - 6123:6123
-    volumes:
-      - /home/$USER/docker_files/esphomeyaml:/config
-    environment:
-      - TZ=${TZ}
+  # esphomeyaml: 
+  #   image: ottowinter/esphomeyaml:latest
+  #   container_name: esphomeyaml
+  #   command: esphomeyaml dashboard
+  #   restart: always
+  #   network_mode: host
+  #   ports:
+  #     - 6052:6052
+  #     - 6123:6123
+  #   volumes:
+  #     - /home/$USER/docker_files/esphomeyaml:/config
+  #   environment:
+  #     - TZ=${TZ}
 
-  mqtt:
-    image: eclipse-mosquitto:latest
-    container_name: "mqtt"
-    restart: always
-    network_mode: host
-    ports:
-      - 1883:1883
-      - 9001:9001
-    volumes:
-      - /home/$USER/docker_files/mqtt/data:/mosquitto/data
-      - /home/$USER/docker_files/mqtt/config:/mosquitto/config
-      - /home/$USER/docker_files/mqtt/log:/mosquitto/log
-    environment:
-      - TZ=${TZ}
+  # mqtt:
+  #   image: eclipse-mosquitto:latest
+  #   container_name: "mqtt"
+  #   restart: always
+  #   network_mode: host
+  #   ports:
+  #     - 1883:1883
+  #     - 9001:9001
+  #   volumes:
+  #     - /home/$USER/docker_files/mqtt/data:/mosquitto/data
+  #     - /home/$USER/docker_files/mqtt/config:/mosquitto/config
+  #     - /home/$USER/docker_files/mqtt/log:/mosquitto/log
+  #   environment:
+  #     - TZ=${TZ}
 
-  grafana:
-    image: grafana/grafana:latest
-    container_name: "grafana"
-    depends_on:
-      influxdb:
-        condition: service_healthy
-    environment:
-      - TZ=${TZ}
-      - PGID=1000
-      - PUID=1000
-    network_mode: host
-    ports:
-      - 3000:3000
-    restart: on-failure
-    volumes:
-      - /home/$USER/docker_files/grafana:/var/lib/grafana
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   container_name: "grafana"
+  #   depends_on:
+  #     influxdb:
+  #       condition: service_healthy
+  #   environment:
+  #     - TZ=${TZ}
+  #     - PGID=1000
+  #     - PUID=1000
+  #   network_mode: host
+  #   ports:
+  #     - 3000:3000
+  #   restart: on-failure
+  #   volumes:
+  #     - /home/$USER/docker_files/grafana:/var/lib/grafana
 
-  influxdb:
-    image: influxdb:latest
-    container_name: "influxdb"
-    healthcheck:
-      test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
-      interval: 30s
-      timeout: 1s
-      retries: 24
-    environment:
-      - TZ=${TZ}
-    network_mode: host
-    ports:
-      - 8083:8083
-      - 8086:8086
-    restart: on-failure
-    volumes:
-      - /home/$USER/docker_files/influxdb:/var/lib/influxdb
+  # influxdb:
+  #   image: influxdb:latest
+  #   container_name: "influxdb"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
+  #     interval: 30s
+  #     timeout: 1s
+  #     retries: 24
+  #   environment:
+  #     - TZ=${TZ}
+  #   network_mode: host
+  #   ports:
+  #     - 8083:8083
+  #     - 8086:8086
+  #   restart: on-failure
+  #   volumes:
+  #     - /home/$USER/docker_files/influxdb:/var/lib/influxdb
 
 
   # Home Assistant - Smart Home Hub
@@ -105,68 +106,82 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     network_mode:  host
-    depends_on:
-      influxdb:
-        condition: service_healthy
-      mqtt:
-        condition: service_started
+    # depends_on:
+    #   influxdb:
+    #     condition: service_healthy
+    #   mqtt:
+    #     condition: service_started
+
+  
 
 
-  unifi-video-controller:
-    build: .
-    container_name: unifi-video-controller
-    ports:
-      - 1935:1935
-      - 6666:6666
-      - 7004:7004
-      - 7080:7080
-      - 7442:7442
-      - 7443:7443
-      - 7444:7444
-      - 7445:7445
-      - 7446:7446
-      - 7447:7447
-    volumes:
-      - ./run/data:/var/lib/unifi-video
-      - ./run/videos:/var/lib/unifi-video/videos
-    environment:
-      - TZ=${TZ}
-      - DEBUG=1
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
     cap_add:
-      - SYS_ADMIN
-      - DAC_READ_SEARCH
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - URL=theprices.co.nz
+      - SUBDOMAINS=home,
+      - VALIDATION=http
+      - DNSPLUGIN=cloudflare #optional
+      #- DUCKDNSTOKEN=<token> #optional
+      - EMAIL=shane@plenfy.com #optional
+      - DHLEVEL=2048 #optional
+      - ONLY_SUBDOMAINS=false #optional
+      - EXTRA_DOMAINS=<extradomains> #optional
+      - STAGING=false #optional
+    volumes:
+      - ${USERDIR}/docker/letsencrypt:/config
+    ports:
+      - 443:443
+      - 80:80 #optional
+    restart: unless-stopped
+
+  plex:
+      image: linuxserver/plex
+      container_name: plex
+      network_mode: host
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - VERSION=docker
+        - UMASK_SET=022 #optional
+        - PLEX_CLAIM= #optional
+      volumes:
+        - ${USERDIR}/docker/plex/data:/config
+        # - 192.168.1.250/plex:/config
+        # - 192.168.1.250/Video/Movies:/movies
+        
+    #    - </path/to/library>:/config
+     #   - <path/to/tvseries>:/tv
+      #  - </path/to/movies>:/movies
+      restart: unless-stopped    
+  # chowdown:
+  #         image: jekyll/jekyll
+  #         restart: always
+  #         container_name: chowdown
+  #         command: jekyll serve --force_polling
+  #         ports:
+  #           - "5001:4000"
+  #         volumes:
+  #           - .:/srv/jekyll
+  #           - /opt/docker/chowdown/data/components:/srv/jekyll/_components
+  #           - /opt/docker/chowdown/data/images:/srv/jekyll/_images
+  #           - /opt/docker/chowdown/data/posts:/srv/jekyll/_posts
+  #           - /opt/docker/chowdown/data/recipes:/srv/jekyll/_recipes
 # Uncomment security option below to set apparmor unconfined if "tmpfs is write-protected, mounting read-only" error is seen.
 # Known to happen on ubuntu, synology, and other platforms.
-#    security_opt:
-#      - apparmor:unconfined
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "[REDACTED]"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 6
-
-  # home-assistant:
-  #   #image: homeassistant/home-assistant:rc
-  #   image: homeassistant/home-assistant:latest
-  #   container_name: "hass"
-  #   restart: always
-  #   depends_on:
-  #     influxdb:
-  #       condition: service_healthy
-  #     mqtt:
-  #       condition: service_started
+  #  security_opt:
+  #    - apparmor:unconfined
   #   healthcheck:
   #     test: ["CMD", "curl", "-f", "[REDACTED]"]
   #     interval: 30s
   #     timeout: 10s
   #     retries: 6
-  #   network_mode: host
-  #   ports:
-  #     - 8123:8123
-  #   volumes:
-  #     - /home/$USER/docker_files/homeassistant/config:/config
-  #   environment:
-  #     - TZ=${TZ}
 
   # homebridge:
   #   image: oznu/homebridge:latest
@@ -194,23 +209,23 @@ services:
   #     - ./dasher/config:/root/dasher/config
   #   network_mode: host
 
-  unifi:
-    image: jacobalberty/unifi:latest
-    container_name: "Unifi"
-    restart: always
-    volumes:
-      - ./unifi/data:/unifi/data
-    network_mode: host
-    ports:
-      - 3478:3478/udp
-      - 10001:10001/udp
-      - 6789:6789/tcp
-      - 8080:8080/tcp
-      - 8880:8880/tcp
-      - 8443:8443/tcp
-      - 8843:8843/tcp
-    environment:
-    - TZ=${TZ}
+  # unifi:
+  #   image: jacobalberty/unifi:latest
+  #   container_name: "Unifi"
+  #   restart: always
+  #   volumes:
+  #     - ./unifi/data:/unifi/data
+  #   network_mode: host
+  #   ports:
+  #     - 3478:3478/udp
+  #     - 10001:10001/udp
+  #     - 6789:6789/tcp
+  #     - 8080:8080/tcp
+  #     - 8880:8880/tcp
+  #     - 8443:8443/tcp
+  #     - 8843:8843/tcp
+  #   environment:
+  #   - TZ=${TZ}
 
 
 
@@ -223,20 +238,20 @@ services:
 # # # # # # # # # ######### FRONTENDS ##########
 
 # # # # # # # # # #  #Portainer - WebUI for Containers
-# # # # # # # # # #   portainer:
-# # # # # # # # # #     image: portainer/portainer
-# # # # # # # # # #     hostname: portainer
-# # # # # # # # # #     container_name: portainer
-# # # # # # # # # #     restart: always
-# # # # # # # # # #     command: -H unix:///var/run/docker.sock
-# # # # # # # # # #     ports:
-# # # # # # # # # #       - "9000:9000"
-# # # # # # # # # #     volumes:
-# # # # # # # # # #       - /var/run/docker.sock:/var/run/docker.sock
-# # # # # # # # # #       - ${USERDIR}/docker/portainer/data:/data
-# # # # # # # # # #       - ${USERDIR}/docker/shared:/shared
-# # # # # # # # # #     environment:
-# # # # # # # # # #       - TZ=${TZ}
+  # # portainer:
+  # #   image: portainer/portainer
+  # #   hostname: portainer
+  # #   container_name: portainer
+  # #   restart: always
+  # #   command: -H unix:///var/run/docker.sock
+  # #   ports:
+  # #     - "9000:9000"
+  # #   volumes:
+  # #     - /var/run/docker.sock:/var/run/docker.sock
+  # #     - ${USERDIR}/docker/portainer/data:/data
+  # #     - ${USERDIR}/docker/shared:/shared
+  # #   environment:
+  # #     - TZ=${TZ}
 
 # # # # # # # # # # # Organizer - Unified HTPC/Home Server Web Interface
 # # # # # # # # # #   organizr:
@@ -281,31 +296,6 @@ services:
 # # # # # # # # #   #   command: --schedule "0 0 4 * * *" --cleanup
 
 # # # # # # # # # ######### SMART HOME APPS ##########
-
-# # # # # # # # # # Home Assistant - Smart Home Hub
-# # # # # # # # # # need to get working from 
-# # # # # # # # #   homeassistant:
-# # # # # # # # #     container_name: homeassistant
-# # # # # # # # #     hostname: hass
-# # # # # # # # #     restart: always
-# # # # # # # # #     image: homeassistant/home-assistant
-# # # # # # # # #     devices:
-# # # # # # # # #       # - /dev/ttyUSB0:/dev/ttyUSB0
-# # # # # # # # #       # - /dev/ttyUSB1:/dev/ttyUSB1
-# # # # # # # # #          - /dev/ttyACM0:/dev/ttyACM0
-# # # # # # # # #          - /dev/ttyUSB-ZStick-5G:/dev/ttyUSB-ZStick-5G
-# # # # # # # # #     volumes:
-# # # # # # # # #       - ${USERDIR}/docker/homeassistant:/config
-# # # # # # # # #       - /etc/localtime:/etc/localtime:ro
-# # # # # # # # #       - ${USERDIR}/docker/shared:/shared
-# # # # # # # # #     ports:
-# # # # # # # # #       - "8123:8123"
-# # # # # # # # #     privileged: true
-# # # # # # # # #     environment:
-# # # # # # # # #       - PUID=${PUID}
-# # # # # # # # #       - PGID=${PGID}
-# # # # # # # # #       - TZ=${TZ}
-# # # # # # # # #     network_mode:  host
 
 # # # # # # # # #   nodered:
 # # # # # # # # #       container_name: node-red

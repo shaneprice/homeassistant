@@ -2,33 +2,65 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+
+
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
 
 # Text to speech
-tts:
-  - platform: google_translate
+# tts:
+#   - platform: google_translate
 
-group: !include groups.yaml
+#group: !include groups.yaml
 automation: !include automations.yaml
-script: !include scripts.yaml
+#script: !include scripts.yaml
+scene: !include scenes.yaml
 
+#media_player:
+  # - platform: samsungtv
+  #   host: 192.168.1.16
+  #   name: "Main TV"
+  #   port: 8001
+  #   mac: 8c:79:f5:a1:02:10
+  #  sourcelist: '{"TV": "KEY_TV", "HDMI": "KEY_HDMI"}'
+   # applist: "YouTube, Apple TV, Prime Video, Spotify"
+   # protocol: ctl_qled
 
+#samsungtv:
+ # - host: 192.168.1.16
+  #- name: hellotv
 
+config:
 # # # Sensors
 sensor:
-  name: aftership
-  platform: aftership
-  api_key: !secret aftership_key
+  -  platform: aftership
+     name: aftership
+     api_key: !secret aftership_key
+ # - platform: ring
+  - platform: unifiprotect
+  - platform: fronius
+    resource: http://192.168.1.41
+    monitored_conditions:
+      - sensor_type: inverter
+        device: 1
+      - sensor_type: meter
+        scope: system
+      - sensor_type: meter
+        device: 3
+      - sensor_type: power_flow
+     
+
+tplink:
+  discovery: true
 
 
 homeassistant:
   name: !secret name
   temperature_unit: C
   # time_zone: !secret timezone
-  # latitude: !secret latitude
-  # longitude: !secret longitude
+  latitude: !secret latitude
+  longitude: !secret longitude
   unit_system: metric
   elevation: 6
 
@@ -58,12 +90,34 @@ zwave:
 # remote:
 #   - platform: harmony
 
-remote:
-  - platform: harmony
-    name: Lounge
-    host: !secret harmony_host
+# remote:
+#   - platform: harmony
+#     name: Lounge
+#     host: !secret harmony_host
+
+#camera:
+ # - platform: uvc
+  #  nvr: 127.0.0.1
+   # key: !secret unifi_camera_key
+
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
+
+unifiprotect:
+  host: !secret unifi_protect_ip
+  username: !secret unifi_protect_username
+  password: !secret unifi_protect_password
+ # image_width: 500
+ # minimum_score: 1
 
 camera:
-  - platform: uvc
-    nvr: 127.0.0.1
-    key: !secret unifi_camera_key
+   # - platform: ring
+    - platform: unifiprotect
+
+
+binary_sensor:
+  - platform: unifiprotect
+
+switch:
+  - platform: unifiprotect

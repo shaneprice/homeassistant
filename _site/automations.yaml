@@ -1,0 +1,5 @@
+# action:
+#   - service: remote.turn_on
+#     entity_id: remote.lounge
+#     data:
+#        activity: "XBOX"

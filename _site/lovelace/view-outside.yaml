@@ -1,0 +1,9 @@
+title: Overview
+id: outside
+path: outside
+icon: mdi:cup
+cards:
+      - entity: light.entry_dimmer_level
+        type: custom:slider-entity-row
+      
+    
