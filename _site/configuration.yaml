@@ -12,21 +12,24 @@ default_config:
 # tts:
 #   - platform: google_translate
 
-group: !include groups.yaml
+#group: !include groups.yaml
 automation: !include automations.yaml
-script: !include scripts.yaml
+#script: !include scripts.yaml
 scene: !include scenes.yaml
 
-media_player:
-  - platform: samsungtv
-    host: 192.168.1.16
-    name: "Main TV"
-    port: 8001
-    mac: 8c:79:f5:a1:02:10
+#media_player:
+  # - platform: samsungtv
+  #   host: 192.168.1.16
+  #   name: "Main TV"
+  #   port: 8001
+  #   mac: 8c:79:f5:a1:02:10
   #  sourcelist: '{"TV": "KEY_TV", "HDMI": "KEY_HDMI"}'
    # applist: "YouTube, Apple TV, Prime Video, Spotify"
    # protocol: ctl_qled
 
+#samsungtv:
+ # - host: 192.168.1.16
+  #- name: hellotv
 
 config:
 # # # Sensors
@@ -34,22 +37,47 @@ sensor:
   -  platform: aftership
      name: aftership
      api_key: !secret aftership_key
-  - platform: ring
+ # - platform: ring
   - platform: unifiprotect
-  - platform: fronius
-    resource: http://192.168.1.41
-    monitored_conditions:
-      - sensor_type: inverter
-        device: 1
-      - sensor_type: meter
-        scope: system
-      - sensor_type: meter
-        device: 3
-      - sensor_type: power_flow
+
+  - platform: template
+    sensors:
+      washing_machine_amps:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Current"
+        value_template: '{{ states.switch.washing_machine.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      washing_machine_watts:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Current Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      washing_machine_total_kwh:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Total Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      washing_machine_volts:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Voltage"
+        value_template: '{{ states.switch.washing_machine.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      washing_machine_today_kwh:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Today's Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+  # - platform: fronius
+  #   resource: http://192.168.1.41
+  #   monitored_conditions:
+  #     - sensor_type: inverter
+  #       device: 1
+  #     - sensor_type: meter
+  #       scope: system
+  #     - sensor_type: meter
+  #       device: 3
+  #     - sensor_type: power_flow
      
 
 tplink:
-  discovery: true
+  discovery: false
+  switch:
+    - host: 192.168.1.38
 
 
 homeassistant:
@@ -109,7 +137,7 @@ unifiprotect:
  # minimum_score: 1
 
 camera:
-    - platform: ring
+   # - platform: ring
     - platform: unifiprotect
 
 
@@ -118,3 +146,7 @@ binary_sensor:
 
 switch:
   - platform: unifiprotect
+
+timer:
+  upstairs_lights:
+    duration: '00:01:00'

@@ -1,0 +1,40 @@
+title: Lights
+id: lights
+path: lights
+icon: mdi:lightbulb
+type: entities
+entities:
+  - light.entry_dimmer_level
+  - type: custom:slider-entity-row
+    entity: light.lounge_dimmer_level
+#cards:
+      # - entity: light.entry_dimmer_level
+      #   type: custom:slider-entity-row
+
+      # - entities:
+      #     - entity: light.entry_dimmer_level
+      #       type: custom:slider-entity-row
+      #     - entity: light.dining_switch
+      #     - entity: light.dining_dimmer_level
+      #       type: custom:slider-entity-row
+      #     - entity: light.lounge_dimmer_level
+      #       type: custom:slider-entity-row
+       
+      #   show_header_toggle: false
+      #   title: Dimmer Lights
+     
+  # type: custom:auto-entities
+  # show_empty: false
+  # card:
+  #   type: entities
+  #   title: Lights on
+  #   show_header_toggle: false
+  # filter:
+  #   include:
+  #     - domain: light
+  #   exclude:
+  #   - state: "off"
+  #   - state: "unavailable"
+          
+
+    

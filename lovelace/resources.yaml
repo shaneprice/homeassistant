@@ -28,11 +28,11 @@
   type: module
 - url: /local/weather-card.js
   type: module
-- url: /local/monster-card.js
-  type: js
 - url: /local/auto-entities.js
   type: js
 - url: /local/card-tools.js
   type: js
 - url: /local/fold-entity-row.js
   type: js
+- url: /local/slider-entity-row.js
+  type: module

@@ -1,5 +1,77 @@
-# action:
-#   - service: remote.turn_on
-#     entity_id: remote.lounge
-#     data:
-#        activity: "XBOX"
+- id: '2581929098159'
+  alias: Turn on thread lights upstairs on motion
+
+  trigger:
+  - platform: state
+    entity_id: sensor.bookcase_sensor_burglar,sensor.top_stairs_burglar
+    to: '8'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id:
+        - switch.nano_switch_tread_upstairs_switch
+  - service: timer.start
+    data:
+      entity_id: timer.upstairs_lights
+
+- alias: Turn off upstairs lights 10 minutes after trigger
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.upstairs_lights
+  action:
+    service: switch.turn_off
+    data:
+      entity_id:
+        - switch.nano_switch_tread_upstairs_switch
+        
+
+# - id: '1580969670350'
+#   alias: Motion detected on the middle stairs
+#   description: ''
+#   trigger:
+#   - entity_id: sensor.top_stairs_burglar
+#     from: '0'
+#     platform: state
+#     to: '8'
+#   - entity_id: sensor.bookcase_sensor_burglar
+#     from: '0'
+#     platform: state
+#     to: '8'
+#   condition:
+#   - after: '20:00'
+#     before: 06:00
+#     condition: time
+#   action:
+#   - entity_id: switch.nano_switch_tread_upstairs_switch
+#     service: switch.turn_on
+#   - delay: '10000'
+#   - entity_id: switch.nano_switch_tread_upstairs_switch
+#     service: switch.turn_off
+# - id: heal_zwave_network
+#   alias: Heal Z-Wave Network
+#   initial_state: 'on'
+#   trigger:
+#     platform: time
+#     at: '2:31:00'
+#   action:
+#     service: zwave.heal_network
+# - id: '1581929098159'
+#   alias: Turn on Upstairs Tread with motion
+#   description: ''
+#   trigger:
+#   - entity_id: sensor.bookcase_sensor_burglar
+#     platform: state
+#     to: '8'
+#   - entity_id: sensor.top_stairs_burglar
+#     platform: state
+#     to: '8'
+#   condition:
+#   - after: '10:00'
+#     before: 07:00
+#     condition: time
+#   action:
+#   - entity_id: switch.nano_switch_tread_upstairs_switch
+#     service: switch.turn_on
+#   - delay: ''

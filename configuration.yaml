@@ -39,20 +39,45 @@ sensor:
      api_key: !secret aftership_key
  # - platform: ring
   - platform: unifiprotect
-  - platform: fronius
-    resource: http://192.168.1.41
-    monitored_conditions:
-      - sensor_type: inverter
-        device: 1
-      - sensor_type: meter
-        scope: system
-      - sensor_type: meter
-        device: 3
-      - sensor_type: power_flow
+
+  - platform: template
+    sensors:
+      washing_machine_amps:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Current"
+        value_template: '{{ states.switch.washing_machine.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      washing_machine_watts:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Current Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      washing_machine_total_kwh:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Total Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      washing_machine_volts:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Voltage"
+        value_template: '{{ states.switch.washing_machine.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      washing_machine_today_kwh:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Today's Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+  # - platform: fronius
+  #   resource: http://192.168.1.41
+  #   monitored_conditions:
+  #     - sensor_type: inverter
+  #       device: 1
+  #     - sensor_type: meter
+  #       scope: system
+  #     - sensor_type: meter
+  #       device: 3
+  #     - sensor_type: power_flow
      
 
 tplink:
-  discovery: true
+  discovery: false
+  switch:
+    - host: 192.168.1.38
 
 
 homeassistant:
@@ -121,3 +146,7 @@ binary_sensor:
 
 switch:
   - platform: unifiprotect
+
+timer:
+  upstairs_lights:
+    duration: '00:01:00'

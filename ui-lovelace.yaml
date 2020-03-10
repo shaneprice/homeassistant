@@ -2,6 +2,7 @@ title: Our Home
 resources: !include lovelace/resources.yaml
 cch: !include lovelace/cch.yaml
 views:
+  - !include lovelace/lights.yaml
   - !include lovelace/view-overview.yaml
   #- !include lovelace/view-zwave.yaml
   - !include lovelace/sensors.yaml

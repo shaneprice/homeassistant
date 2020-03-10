@@ -14,10 +14,10 @@ cards:
           - sensor.ring_front_door_battery
           - sensor.ring_front_door_last_ding
           - sensor.ring_front_door_last_activity
-      - type: custom:monster-card
-        card:
-          type: entities
-          title: Sensors
-        filter:
-          include:
-            - entity_id: sensor.*
+      # - type: custom:monster-card
+      #   card:
+      #     type: entities
+      #     title: Sensors
+      #   filter:
+      #     include:
+      #       - entity_id: sensor.*

@@ -6,8 +6,26 @@ cards:
       - entity: light.entry_dimmer_level
         type: custom:slider-entity-row
 
+      - entity: light.dining_dimmer_level
+        type: custom:slider-entity-row
+
+      - entity: light.tv_room_dimmer_level
+        type: custom:slider-entity-row
+      
+      - entity: light.lounge_dimmer_level
+        type: custom:slider-entity-row
+
+      - entity: light.kitchen_dimmer_level
+        type: custom:slider-entity-row
+
+      - entity: cover.louvretec_switch
+        type: custom:slider-entity-row
+
+      
+
       - entity: weather.dark_sky
         type: custom:weather-card
+
       
       - entity: sensor.family_room_temperature
         graph: line
@@ -73,45 +91,45 @@ cards:
         type: 'custom:aftership-card'
 
 
-      - type: custom:monster-card
-        show_empty: true
-        card:
-          type: glance
-          title: Low Battery Devices
-        filter:
-          include:
-            - entity_id: "*battery_level*"
-              state: '< 40'
-            - attributes:
-                battery: '< 40'
-            - attributes:
-                battery_level: '< 40'
+      # - type: custom:monster-card
+      #   show_empty: true
+      #   card:
+      #     type: glance
+      #     title: Low Battery Devices
+      #   filter:
+      #     include:
+      #       - entity_id: "*battery_level*"
+      #         state: '< 40'
+      #       - attributes:
+      #           battery: '< 40'
+      #       - attributes:
+      #           battery_level: '< 40'
 
-      - type: custom:monster-card
-        card:
-          type: entities
-          title: Things that are broken
-        filter:
-          include:
-            - state: "unknown"
-          exclude:
-            - entity_id: group.*
+      # - type: custom:monster-card
+      #   card:
+      #     type: entities
+      #     title: Things that are broken
+      #   filter:
+      #     include:
+      #       - state: "unknown"
+      #     exclude:
+      #       - entity_id: group.*
 
-      - type: custom:monster-card
-        card:
-          type: entities
-          title: Lights
-        filter:
-          include:
-            - entity_id: light.*
+      # - type: custom:monster-card
+      #   card:
+      #     type: entities
+      #     title: Lights
+      #   filter:
+      #     include:
+      #       - entity_id: light.*
 
-      - type: custom:monster-card
-        card:
-          type: entities
-          title: Switches
-        filter:
-          include:
-            - entity_id: switch.*
+      # - type: custom:monster-card
+      #   card:
+      #     type: entities
+      #     title: Switches
+      #   filter:
+      #     include:
+      #       - entity_id: switch.*
 
   
           

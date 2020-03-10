@@ -3,8 +3,6 @@ id: sensors
 path: sensors
 icon: mdi:camera
 cards:
-      - entity: light.entry_dimmer_level
-        type: custom:slider-entity-row
       - entity: sensor.family_room_temperature
         graph: line
         name: Family Room
@@ -16,10 +14,10 @@ cards:
           - sensor.ring_front_door_battery
           - sensor.ring_front_door_last_ding
           - sensor.ring_front_door_last_activity
-        
-      #    - group.all_lights
-        camera_image: camera.front_door
-
-      - entity: group.motion
-
-      - title: Devices
+      # - type: custom:monster-card
+      #   card:
+      #     type: entities
+      #     title: Sensors
+      #   filter:
+      #     include:
+      #       - entity_id: sensor.*

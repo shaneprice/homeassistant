@@ -1,9 +1,30 @@
-title: Overview
+title: Outside
 id: outside
-path: outside
-icon: mdi:cup
+path: home
+icon: mdi:flower
 cards:
-      - entity: light.entry_dimmer_level
-        type: custom:slider-entity-row
-      
-    
+      # - type: entities
+      #    entities:
+      #     - zwave.louvretec_shutter
+      #     - cover.louvretec_shutter_level
+      #     - cover.louvretec_switch
+
+
+
+    #- type: entities
+    # entities:
+    #   - binary_sensor.number_sign_switch
+    #   - type: divider
+    #   - binary_sensor.garden_lights_switch
+    #   - type: divider
+    #   - binary_sensor.cabinet_light_switch
+    #   - binary_sensor.tv_light_switch
+    #   - binary_sensor.livingroom_socket_switch
+    #   - binary_sensor.table_light_switch
+    #   - type: divider
+    #   - binary_sensor.vestibule_socket_switch
+    #   - binary_sensor.family_room_socket_switch
+    #   - binary_sensor.master_bedroom_socket_switch
+    #   - binary_sensor.second_bedroom_switch
+    #   - binary_sensor.spare_socket_switch
+    #   - binary_sensor.hall_downstairs_switch
