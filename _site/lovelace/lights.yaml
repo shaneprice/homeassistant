@@ -4,37 +4,17 @@ path: lights
 icon: mdi:lightbulb
 type: entities
 entities:
-  - light.entry_dimmer_level
-  - type: custom:slider-entity-row
-    entity: light.lounge_dimmer_level
-#cards:
-      # - entity: light.entry_dimmer_level
-      #   type: custom:slider-entity-row
-
-      # - entities:
-      #     - entity: light.entry_dimmer_level
-      #       type: custom:slider-entity-row
-      #     - entity: light.dining_switch
-      #     - entity: light.dining_dimmer_level
-      #       type: custom:slider-entity-row
-      #     - entity: light.lounge_dimmer_level
-      #       type: custom:slider-entity-row
-       
-      #   show_header_toggle: false
-      #   title: Dimmer Lights
-     
-  # type: custom:auto-entities
-  # show_empty: false
-  # card:
-  #   type: entities
-  #   title: Lights on
-  #   show_header_toggle: false
-  # filter:
-  #   include:
-  #     - domain: light
-  #   exclude:
-  #   - state: "off"
-  #   - state: "unavailable"
-          
-
-    
+    - zwave.office_dimmer
+    - sensor.office_dimmer_light_alarm_level_4
+    - sensor.office_dimmer_light_alarm_type_4
+    - sensor.office_dimmer_light_current_4
+    - sensor.office_dimmer_light_energy_4
+    - sensor.office_dimmer_light_exporting_4
+    - sensor.office_dimmer_light_heat_4
+    - sensor.office_dimmer_light_interval
+    - sensor.office_dimmer_light_power_4
+    - sensor.office_dimmer_light_power_management_4
+    - sensor.office_dimmer_light_previous_reading
+    - sensor.office_dimmer_light_sourcenodeid_4
+    - sensor.office_dimmer_light_voltage_4
+    - switch.office_dimmer_switch

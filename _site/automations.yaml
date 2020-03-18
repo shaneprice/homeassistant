@@ -1,77 +1,112 @@
 - id: '2581929098159'
   alias: Turn on thread lights upstairs on motion
-
   trigger:
-  - platform: state
-    entity_id: sensor.bookcase_sensor_burglar,sensor.top_stairs_burglar
+  - entity_id: sensor.bookcase_sensor_burglar,sensor.top_stairs_burglar
+    platform: state
     to: '8'
+  condition:
+  - after: '19:30'
+    before: 07:00
+    condition: time
   action:
-  - service: switch.turn_on
-    data:
+  - data:
       entity_id:
-        - switch.nano_switch_tread_upstairs_switch
-  - service: timer.start
-    data:
+      - switch.nano_switch_tread_upstairs_switch
+    service: switch.turn_on
+  - data:
       entity_id: timer.upstairs_lights
-
-- alias: Turn off upstairs lights 10 minutes after trigger
+    service: timer.start
+- id: 8e5370bbab674497ba5e26ca311f42d5
+  alias: Turn off upstairs lights after timer
   trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
+  - event_data:
       entity_id: timer.upstairs_lights
+    event_type: timer.finished
+    platform: event
   action:
-    service: switch.turn_off
-    data:
+  - data:
       entity_id:
-        - switch.nano_switch_tread_upstairs_switch
-        
-
-# - id: '1580969670350'
-#   alias: Motion detected on the middle stairs
-#   description: ''
-#   trigger:
-#   - entity_id: sensor.top_stairs_burglar
-#     from: '0'
-#     platform: state
-#     to: '8'
-#   - entity_id: sensor.bookcase_sensor_burglar
-#     from: '0'
-#     platform: state
-#     to: '8'
-#   condition:
-#   - after: '20:00'
-#     before: 06:00
-#     condition: time
-#   action:
-#   - entity_id: switch.nano_switch_tread_upstairs_switch
-#     service: switch.turn_on
-#   - delay: '10000'
-#   - entity_id: switch.nano_switch_tread_upstairs_switch
-#     service: switch.turn_off
-# - id: heal_zwave_network
-#   alias: Heal Z-Wave Network
-#   initial_state: 'on'
-#   trigger:
-#     platform: time
-#     at: '2:31:00'
-#   action:
-#     service: zwave.heal_network
-# - id: '1581929098159'
-#   alias: Turn on Upstairs Tread with motion
-#   description: ''
-#   trigger:
-#   - entity_id: sensor.bookcase_sensor_burglar
-#     platform: state
-#     to: '8'
-#   - entity_id: sensor.top_stairs_burglar
-#     platform: state
-#     to: '8'
-#   condition:
-#   - after: '10:00'
-#     before: 07:00
-#     condition: time
-#   action:
-#   - entity_id: switch.nano_switch_tread_upstairs_switch
-#     service: switch.turn_on
-#   - delay: ''
+      - switch.nano_switch_tread_upstairs_switch
+    service: switch.turn_off
+- id: '1583886524742'
+  alias: Turn on main lights when the sun is set
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - device_id: b17977721804422f8b99b9ec9168469b
+    domain: light
+    entity_id: light.dining_dimmer_level
+    type: turn_on
+  - device_id: d053316949b04a8b853ba3a1b8199f95
+    domain: light
+    entity_id: light.lounge_dimmer_level
+    type: turn_on
+  - device_id: 36e933232ba14fe896dc136164cfff7a
+    domain: light
+    entity_id: light.kitchen_dimmer_level
+    type: turn_on
+  - device_id: b8d4576c9c1d42f58707d7739b4878bb
+    domain: light
+    entity_id: light.scullery_dimmer_switch_level
+    type: turn_on
+  - device_id: 999e9d4e7da94858ab8ff18b164974df
+    domain: light
+    entity_id: light.tv_room_dimmer_level
+    type: turn_on
+  - device_id: 7e6e1239df2a4b63a5bb95aa09ba6ac6
+    domain: light
+    entity_id: light.entry_dimmer_level
+    type: turn_on
+- id: '8681929098159'
+  alias: Turn on downstairs thread lights on motion
+  trigger:
+  - entity_id: sensor.middle_stairs_top_burglar
+    platform: state
+    to: '8'
+  condition:
+  - after: '19:30'
+    before: 07:00
+    condition: time
+  action:
+  - data:
+      entity_id:
+      - switch.downstairs_treadlight
+      - switch.laundry_lights
+      - switch.garage_dimmer_light
+    service: switch.turn_on
+  - data:
+      entity_id: timer.downstairs_tread_lights
+    service: timer.start
+- id: x87370bbab674497ba8s26ca311f42d5
+  alias: Turn off downstairs tread lights after timer
+  trigger:
+  - event_data:
+      entity_id: timer.downstairs_tread_lights
+    event_type: timer.finished
+    platform: event
+  action:
+  - data:
+      entity_id:
+      - switch.downstairs_treadlight
+      - switch.laundry_lights
+      - switch.garage_dimmer_light
+    service: switch.turn_off
+- id: '1584244122155'
+  alias: Turn on Garage light on when motion is detected
+  description: ''
+  trigger:
+  - entity_id: sensor.garage_entry_door_burglar
+    platform: state
+    to: '8'
+  condition:
+  - after: '18:00'
+    before: 07:30
+    condition: time
+  action:
+  - device_id: 8e37aac5e3414f0c91f8e473d15a028f
+    domain: light
+    entity_id: light.garage_dimmer_light_level_2
+    type: turn_on

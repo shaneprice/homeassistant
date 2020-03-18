@@ -2,13 +2,95 @@ title: Our Home
 resources: !include lovelace/resources.yaml
 cch: !include lovelace/cch.yaml
 views:
-  - !include lovelace/lights.yaml
-  - !include lovelace/view-overview.yaml
-  #- !include lovelace/view-zwave.yaml
-  - !include lovelace/sensors.yaml
-  #- !include lovelace/temperatures.yaml
-  - !include lovelace/cameras.yaml
-  - !include lovelace/view-outside.yaml
+    # View tab title.
+  - title: Example
+    # Unique path for direct access /lovelace/${path}
+    path: example
+    # Each view can have a different theme applied. Theme should be defined in the frontend.
+    theme: dark-mode
+    # The cards to show on this view.
+    cards:
+        # The filter card will filter entities for their state
+      - type: light
+        entity: light.office_dimmer_level
+      - type: light
+        entity: light.master_dimmer_level
+      - type: light
+        entity: light.entry_dimmer_level
+      - type: light
+        entity: light.lounge_dimmer_level
+      - type: light
+        entity: light.garage_dimmer_level
+      - type: light
+        entity: light.kids_dimmer_level
+      - type: entity-filter
+        entities:
+          - device_tracker.shane
+          - device_tracker.inga
+        state_filter:
+          - 'home'
+        card:
+          type: glance
+          title: People that are home
+
+        # The picture entity card will represent an entity with a picture
+      - type: picture-entity
+        image: https://www.home-assistant.io/images/default-social.png
+        entity: light.master_light
+
+    # Specify a tab icon if you want the view tab to be an icon.
+  - icon: mdi:home-assistant
+    # Title of the view. Will be used as the tooltip for tab icon
+    title: Second view
+    cards:
+        # Entities card will take a list of entities and show their state.
+      - type: entities
+        # Title of the entities card
+        title: Example
+        # The entities here will be shown in the same order as specified.
+        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - light.laundry
+          - switch.nano_switch_laundry
+          - sensor.worldwide_coronavirus_current
+          - sensor.new_zealand_coronavirus_current
+          - entity: light.living_room
+            # Override the name to use
+            name: LR Lights
+
+        # The markdown card will render markdown text.
+      - type: markdown
+        title: Lovelace
+        content: >
+          Welcome to your **Lovelace UI**.
+  # title: Lights
+  # id: lights
+  # path: lights
+  # icon: mdi:lightbulb
+  # type: entities
+  # entities:
+  #     - zwave.office_dimmer
+  #     - sensor.office_dimmer_light_alarm_level_4
+  #     - sensor.office_dimmer_light_alarm_type_4
+  #     - sensor.office_dimmer_light_current_4
+  #     - sensor.office_dimmer_light_energy_4
+  #     - sensor.office_dimmer_light_exporting_4
+  #     - sensor.office_dimmer_light_heat_4
+  #     - sensor.office_dimmer_light_interval
+  #     - sensor.office_dimmer_light_power_4
+  #     - sensor.office_dimmer_light_power_management_4
+  #     - sensor.office_dimmer_light_previous_reading
+  #     - sensor.office_dimmer_light_sourcenodeid_4
+  #     - sensor.office_dimmer_light_voltage_4
+  #     - switch.office_dimmer_switch
+
+#  # - !include lovelace/lights.yaml
+#   - !include lovelace/view-overview.yaml
+#   #- !include lovelace/view-zwave.yaml
+#   - !include lovelace/sensors.yaml
+#   #- !include lovelace/temperatures.yaml
+#   - !include lovelace/cameras.yaml
+#   - !include lovelace/view-outside.yaml
 
 
 # title: Home

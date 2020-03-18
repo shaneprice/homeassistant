@@ -1,0 +1,7 @@
+'1583886189076':
+  alias: New Script
+  sequence:
+  - device_id: 404fedd91ebf440aaf6f1012b3e6bf4e
+    domain: switch
+    entity_id: switch.kitchen_tasklights
+    type: turn_off

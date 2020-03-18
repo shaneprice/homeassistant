@@ -150,3 +150,6 @@ switch:
 timer:
   upstairs_lights:
     duration: '00:01:00'
+  
+  downstairs_tread_lights:
+    duration: '00:01:00'
