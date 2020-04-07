@@ -1,0 +1,8 @@
+{
+    "domain": "zwavepowerconsumption",
+    "name": "ZWave Power Consumption",
+    "documentation": "https://github.com/shaneprice/zwavepowerconsumption",
+    "requirements": [],
+    "dependencies": [],
+    "codeowners": ["@spricenz"]
+}

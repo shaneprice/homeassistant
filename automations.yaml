@@ -1,12 +1,20 @@
+- id: heal_zwave_network
+  alias: Heal Z-Wave Network
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '2:31:00'
+  action:
+    service: zwave.heal_network
 - id: '2581929098159'
   alias: Turn on thread lights upstairs on motion
   trigger:
-  - entity_id: sensor.bookcase_sensor_burglar,sensor.top_stairs_burglar
+  - entity_id: binary_sensor.top_stairs_sensor,binary_sensor.bookcase_sensor_sensor
     platform: state
-    to: '8'
+    to: 'on'
   condition:
-  - after: '19:30'
-    before: 07:00
+  - after: '18:30'
+    before: 07:30
     condition: time
   action:
   - data:
@@ -28,85 +36,93 @@
       entity_id:
       - switch.nano_switch_tread_upstairs_switch
     service: switch.turn_off
-- id: '1583886524742'
-  alias: Turn on main lights when the sun is set
-  description: ''
-  trigger:
-  - event: sunset
-    platform: sun
-  condition: []
-  action:
-  - device_id: b17977721804422f8b99b9ec9168469b
-    domain: light
-    entity_id: light.dining_dimmer_level
-    type: turn_on
-  - device_id: d053316949b04a8b853ba3a1b8199f95
-    domain: light
-    entity_id: light.lounge_dimmer_level
-    type: turn_on
-  - device_id: 36e933232ba14fe896dc136164cfff7a
-    domain: light
-    entity_id: light.kitchen_dimmer_level
-    type: turn_on
-  - device_id: b8d4576c9c1d42f58707d7739b4878bb
-    domain: light
-    entity_id: light.scullery_dimmer_switch_level
-    type: turn_on
-  - device_id: 999e9d4e7da94858ab8ff18b164974df
-    domain: light
-    entity_id: light.tv_room_dimmer_level
-    type: turn_on
-  - device_id: 7e6e1239df2a4b63a5bb95aa09ba6ac6
-    domain: light
-    entity_id: light.entry_dimmer_level
-    type: turn_on
 - id: '8681929098159'
   alias: Turn on downstairs thread lights on motion
   trigger:
-  - entity_id: sensor.middle_stairs_top_burglar
+  - entity_id: binary_sensor.middle_stairs_top
     platform: state
-    to: '8'
+    to: 'on'
   condition:
-  - after: '19:30'
-    before: 07:00
-    condition: time
+    condition: or
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: '-03:00:00'
+      - condition: numeric_state
+        entity_id: sensor.dark_sky_cloud_coverage
+        above: 50
   action:
   - data:
       entity_id:
       - switch.downstairs_treadlight
       - switch.laundry_lights
-      - switch.garage_dimmer_light
     service: switch.turn_on
   - data:
       entity_id: timer.downstairs_tread_lights
     service: timer.start
-- id: x87370bbab674497ba8s26ca311f42d5
-  alias: Turn off downstairs tread lights after timer
+- id: '1584550244601'
+  alias: Turn scullery lights on
+  trigger:
+  - entity_id: binary_sensor.scullery_sensor_sensor
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id:
+      - switch.scullery_dimmer_switch
+    service: switch.turn_on
+  - data: {}
+    entity_id: timer.scullery
+    service: timer.start
+- id: '1584673132132'
+  alias: Turn scullery light off after timer
+  description: turns off the lights based on the configured timer
+  trigger:
+  - event_data:
+      entity_id: timer.scullery
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.scullery_dimmer_switch
+    service: switch.turn_off
+- id: '1584743474579'
+  alias: Turn off mid level tread lights after timer
+  description: ''
   trigger:
   - event_data:
       entity_id: timer.downstairs_tread_lights
     event_type: timer.finished
     platform: event
+  condition: []
   action:
-  - data:
-      entity_id:
-      - switch.downstairs_treadlight
-      - switch.laundry_lights
-      - switch.garage_dimmer_light
+  - data: {}
+    entity_id: switch.downstairs_treadlight
     service: switch.turn_off
-- id: '1584244122155'
-  alias: Turn on Garage light on when motion is detected
+- id: '1585953925794'
+  alias: Start Garage Timer after switch is turned on
   description: ''
   trigger:
-  - entity_id: sensor.garage_entry_door_burglar
+  - entity_id: light.garage_dimmer_level
     platform: state
-    to: '8'
-  condition:
-  - after: '18:00'
-    before: 07:30
-    condition: time
+    to: 'on'
+  condition: []
   action:
-  - device_id: 8e37aac5e3414f0c91f8e473d15a028f
-    domain: light
-    entity_id: light.garage_dimmer_light_level_2
-    type: turn_on
+  - data: {}
+    entity_id: timer.garage_lights
+    service: timer.start
+- id: '1585996411514'
+  alias: Turn Off Garage Lights after Timer
+  description: ''
+  trigger:
+  - event_data:
+      entity_id: timer.garage_lights
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.garage_dimmer_switch
+    service: switch.turn_off

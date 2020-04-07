@@ -1,0 +1,8 @@
+Office lights:
+  entities:
+    - light.office_dimmer_level
+
+Living Area Lights:
+  entities:
+   - light.lounge_dimmer_level
+   - light.tv_room_dimmer_level

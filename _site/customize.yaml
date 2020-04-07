@@ -7,3 +7,36 @@
 # switch.georgina:
 #   friendly_name: Georgina's Heater
 #   icon: mdi:radiator
+
+
+#fronius
+sensor.current_ac_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar - Current AC
+
+sensor.current_dc_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar  Current DC
+
+sensor.frequency_ac_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar - Frequency AC
+
+sensor.power_ac_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar - Power AC
+
+
+sensor.energy_day_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar - Energy Day
+
+sensor.energy_day_fronius_power_flow_0_http_192_168_1_41:
+  friendly_name: Solar - Power Flow
+
+sensor.energy_total_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar - Total Generated Power
+
+sensor.energy_year_fronius_power_flow_0_http_192_168_1_41:
+  friendly_name: Solar - This Years generated Power
+
+sensor.energy_year_fronius_inverter_1_http_192_168_1_41:
+  friendly_name: Solar - Energy Year
+
+sensor.energy_total_fronius_power_flow_0_http_192_168_1_41:
+  friendly_name: Solar - Total Power Flow

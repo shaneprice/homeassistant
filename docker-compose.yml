@@ -46,40 +46,40 @@ services:
   #   environment:
   #     - TZ=${TZ}
 
-  # grafana:
-  #   image: grafana/grafana:latest
-  #   container_name: "grafana"
-  #   depends_on:
-  #     influxdb:
-  #       condition: service_healthy
-  #   environment:
-  #     - TZ=${TZ}
-  #     - PGID=1000
-  #     - PUID=1000
-  #   network_mode: host
-  #   ports:
-  #     - 3000:3000
-  #   restart: on-failure
-  #   volumes:
-  #     - /home/$USER/docker_files/grafana:/var/lib/grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: "grafana"
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    environment:
+      - TZ=${TZ}
+      - PGID=1000
+      - PUID=1000
+    network_mode: host
+    ports:
+      - 3000:3000
+    restart: on-failure
+    volumes:
+      - ${USERDIR}/docker/grafana:/var/lib/grafana
 
-  # influxdb:
-  #   image: influxdb:latest
-  #   container_name: "influxdb"
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
-  #     interval: 30s
-  #     timeout: 1s
-  #     retries: 24
-  #   environment:
-  #     - TZ=${TZ}
-  #   network_mode: host
-  #   ports:
-  #     - 8083:8083
-  #     - 8086:8086
-  #   restart: on-failure
-  #   volumes:
-  #     - /home/$USER/docker_files/influxdb:/var/lib/influxdb
+  influxdb:
+    image: influxdb:latest
+    container_name: "influxdb"
+    healthcheck:
+      test: ["CMD", "curl", "-sI", "http://127.0.0.1:8086/ping"]
+      interval: 30s
+      timeout: 1s
+      retries: 24
+    environment:
+      - TZ=${TZ}
+    network_mode: host
+    ports:
+      - 8083:8083
+      - 8086:8086
+    restart: on-failure
+    volumes:
+      - ${USERDIR}/docker/influxdb:/var/lib/influxdb
 
 
   # Home Assistant - Smart Home Hub
@@ -106,11 +106,11 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     network_mode:  host
-    # depends_on:
-    #   influxdb:
-    #     condition: service_healthy
-    #   mqtt:
-    #     condition: service_started
+    depends_on:
+      influxdb:
+        condition: service_healthy
+     # mqtt:
+      #  condition: service_started
 
   
 
@@ -619,20 +619,20 @@ services:
 # # # # # # # # # # ######### UTILITIES ##########
 
 # # # # # # # # # # # MariaDB – Database Server for your Apps
-  mariadb:
-    image: "linuxserver/mariadb"
-    container_name: "mariadb"
-    hostname: mariadb
-    volumes:
-        - ${USERDIR}/docker/mariadb:/config
-    ports:
-         - "3306:3306/tcp"
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+  # mariadb:
+  #   image: "linuxserver/mariadb"
+  #   container_name: "mariadb"
+  #   hostname: mariadb
+  #   volumes:
+  #       - ${USERDIR}/docker/mariadb:/config
+  #   ports:
+  #        - "3306:3306/tcp"
+  #   restart: always
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - TZ=${TZ}
 
 # # # # # # # # # # # NextCloud – Your Own Cloud Storage
 # # # # # # # # # #   nextcloud:

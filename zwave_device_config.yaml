@@ -1,0 +1,3 @@
+sensor.scullery_sensor_battery_level_2:
+  ignored: true
+  polling_intensity: 0

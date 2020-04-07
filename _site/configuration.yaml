@@ -27,9 +27,14 @@ scene: !include scenes.yaml
    # applist: "YouTube, Apple TV, Prime Video, Spotify"
    # protocol: ctl_qled
 
-#samsungtv:
- # - host: 192.168.1.16
+samsungtv:
+  - host: 192.168.1.16
   #- name: hellotv
+
+influxdb:
+  host: 192.168.1.150
+  database: home_assistant
+
 
 config:
 # # # Sensors
@@ -38,7 +43,7 @@ sensor:
      name: aftership
      api_key: !secret aftership_key
  # - platform: ring
-  - platform: unifiprotect
+ # - platform: unifiprotect
 
   - platform: template
     sensors:
@@ -62,16 +67,15 @@ sensor:
         friendly_name_template: "{{ states.switch.washing_machine.name}} Today's Consumption"
         value_template: '{{ states.switch.washing_machine.attributes["today_energy_kwh"] | float }}'
         unit_of_measurement: 'kWh'
-  # - platform: fronius
-  #   resource: http://192.168.1.41
-  #   monitored_conditions:
-  #     - sensor_type: inverter
-  #       device: 1
-  #     - sensor_type: meter
-  #       scope: system
-  #     - sensor_type: meter
-  #       device: 3
-  #     - sensor_type: power_flow
+  - platform: fronius
+    resource: http://192.168.1.41
+    monitored_conditions:
+      - sensor_type: inverter
+        device: 1
+     
+      - sensor_type: meter
+        device: 3
+      - sensor_type: power_flow
      
 
 tplink:
@@ -83,13 +87,13 @@ tplink:
 homeassistant:
   name: !secret name
   temperature_unit: C
-  # time_zone: !secret timezone
   latitude: !secret latitude
   longitude: !secret longitude
   unit_system: metric
   elevation: 6
 
   customize: !include customize.yaml
+  packages: !include_dir_named packages
 
 
 
@@ -129,27 +133,33 @@ ring:
   username: !secret ring_username
   password: !secret ring_password
 
-unifiprotect:
-  host: !secret unifi_protect_ip
-  username: !secret unifi_protect_username
-  password: !secret unifi_protect_password
+
+logger: !include logger.yaml
+
+# unifiprotect:
+#   host: !secret unifi_protect_ip
+#   username: !secret unifi_protect_username
+#   password: !secret unifi_protect_password
  # image_width: 500
  # minimum_score: 1
 
 camera:
-   # - platform: ring
-    - platform: unifiprotect
+#  - platform: ring
+ #   - platform: unifiprotect
 
 
 binary_sensor:
-  - platform: unifiprotect
+  #- platform: unifiprotect
 
 switch:
-  - platform: unifiprotect
+  #- platform: unifiprotect
 
-timer:
-  upstairs_lights:
-    duration: '00:01:00'
-  
-  downstairs_tread_lights:
-    duration: '00:01:00'
+timer: !include timers.yaml
+
+
+
+history: 
+
+recorder:
+  purge_keep_days: 5
+  purge_interval: 1

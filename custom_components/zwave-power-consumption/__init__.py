@@ -1,0 +1,1 @@
+"""The ZWave Power Consumption App integration."""
