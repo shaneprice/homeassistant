@@ -619,20 +619,23 @@ services:
 # # # # # # # # # # ######### UTILITIES ##########
 
 # # # # # # # # # # # MariaDB – Database Server for your Apps
-  # mariadb:
-  #   image: "linuxserver/mariadb"
-  #   container_name: "mariadb"
-  #   hostname: mariadb
-  #   volumes:
-  #       - ${USERDIR}/docker/mariadb:/config
-  #   ports:
-  #        - "3306:3306/tcp"
-  #   restart: always
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #     - TZ=${TZ}
+  mariadb:
+    image: "linuxserver/mariadb"
+    container_name: "mariadb"
+    hostname: mariadb
+    volumes:
+        - ${USERDIR}/docker/mariadb:/config
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
 
 # # # # # # # # # # # NextCloud – Your Own Cloud Storage
 # # # # # # # # # #   nextcloud:

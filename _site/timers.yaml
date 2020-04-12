@@ -9,3 +9,6 @@
 
   garage_lights:
     duration: '00:10:00'
+
+  door_lock:
+    duration: '00:05:00'

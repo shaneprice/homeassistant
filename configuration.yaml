@@ -27,8 +27,8 @@ scene: !include scenes.yaml
    # applist: "YouTube, Apple TV, Prime Video, Spotify"
    # protocol: ctl_qled
 
-samsungtv:
-  - host: 192.168.1.16
+# samsungtv:
+#   - host: 192.168.1.16
   #- name: hellotv
 
 influxdb:
@@ -39,6 +39,48 @@ influxdb:
 config:
 # # # Sensors
 sensor:
+  - platform: darksky
+    api_key: !secret darksky_api
+    forecast:
+      - 0
+    hourly_forecast:
+      - 0
+      - 1
+    monitored_conditions:
+      - summary
+      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - icon
+      - nearest_storm_distance
+      - nearest_storm_bearing
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - precip_accumulation
+      - temperature
+      - apparent_temperature
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - wind_gust
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - apparent_temperature_max                                                                                               
+      - apparent_temperature_high                                                                                              
+      - apparent_temperature_min                                                                                               
+      - apparent_temperature_low                                                                                               
+      - temperature_max
+      - temperature_high
+      - temperature_min
+      - temperature_low                                                                                                        
+      - precip_intensity_max                                                                                                   
+      - uv_index 
+      - moon_phase  
+
   -  platform: aftership
      name: aftership
      api_key: !secret aftership_key
@@ -93,6 +135,10 @@ homeassistant:
   elevation: 6
 
   customize: !include customize.yaml
+  customize_glob:
+    "sensor.*_exporting*":
+      hidden: true
+
   packages: !include_dir_named packages
 
 
@@ -116,6 +162,7 @@ zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
 
+
 # remote:
 #   - platform: harmony
 
@@ -136,12 +183,12 @@ ring:
 
 logger: !include logger.yaml
 
-# unifiprotect:
-#   host: !secret unifi_protect_ip
-#   username: !secret unifi_protect_username
-#   password: !secret unifi_protect_password
- # image_width: 500
- # minimum_score: 1
+unifiprotect:
+  host: !secret unifi_protect_ip
+  username: !secret unifi_protect_username
+  password: !secret unifi_protect_password
+  #image_width: 500
+  #minimum_score: 1
 
 camera:
 #  - platform: ring
@@ -151,8 +198,16 @@ camera:
 binary_sensor:
   #- platform: unifiprotect
 
+#switch: !include switches.yaml
+
 switch:
-  #- platform: unifiprotect
+  - platform: command_line
+    switches:
+      aeotec_zstick_disco_light:
+        friendly_name: 'Aeotec Z-Stick Disco Light'
+        command_on: 'echo -e -n "\x01\x08\x00\xF2\x51\x01\x01\x05\x01\x50" > /dev/ttyACM0'
+        command_off: 'echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/ttyACM0'
+
 
 timer: !include timers.yaml
 

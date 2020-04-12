@@ -1,22 +1,6 @@
  # https://maykar.github.io/compact-custom-header/
 - url: /local/custom-header.js?v=1.3.5
   type: module 
-
-  # https://github.com/kalkih/mini-media-player
-# - url: /community_plugin/mini-media-player/mini-media-player.js?v=1.3.0
-#   type: module 
-  # https://github.com/pkozul/lovelace-floorplan
-#- type: module
- # url: /local/floorplan/floorplan-card.js?v=1.1.8.3.1
-  # https://github.com/thomasloven/lovelace-card-tools
-#- url: /local/card-tools.js?v=1
- # type: js
-  # https://github.com/thomasloven/lovelace-layout-card
-- url: /local/thomasloven/layout-card.js?v=1.1
-  type: js
-  # https://github.com/thomasloven/lovelace-popup-card
-#- url: /local/dist/google-calendar-card.js?v=1
- # type: module
 - url: https://use.fontawesome.com/releases/v5.2.0/css/all.css
   type: css
   # https://github.com/iammexx/home-assistant-config/tree/master/ui/darksky
@@ -28,11 +12,7 @@
   type: module
 - url: /local/weather-card.js
   type: module
-- url: /local/auto-entities.js
-  type: js
 - url: /local/card-tools.js
-  type: js
-- url: /local/fold-entity-row.js
   type: js
 - url: /local/slider-entity-row.js
   type: module

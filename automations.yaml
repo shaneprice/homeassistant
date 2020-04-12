@@ -19,7 +19,7 @@
   action:
   - data:
       entity_id:
-      - switch.nano_switch_tread_upstairs_switch
+      - switch.upstairs_tread_light_switch_switch
     service: switch.turn_on
   - data:
       entity_id: timer.upstairs_lights
@@ -34,7 +34,7 @@
   action:
   - data:
       entity_id:
-      - switch.nano_switch_tread_upstairs_switch
+      - switch.upstairs_tread_light_switch_switch
     service: switch.turn_off
 - id: '8681929098159'
   alias: Turn on downstairs thread lights on motion
@@ -45,12 +45,12 @@
   condition:
     condition: or
     conditions:
-      - condition: sun
-        after: sunset
-        after_offset: '-03:00:00'
-      - condition: numeric_state
-        entity_id: sensor.dark_sky_cloud_coverage
-        above: 50
+    - condition: sun
+      after: sunset
+      after_offset: -03:00:00
+    - condition: numeric_state
+      entity_id: sensor.dark_sky_cloud_coverage
+      above: 50
   action:
   - data:
       entity_id:
@@ -126,3 +126,185 @@
   - data: {}
     entity_id: switch.garage_dimmer_switch
     service: switch.turn_off
+- id: '1586309248006'
+  alias: Turn on garage lights with motion
+  trigger:
+  - entity_id: binary_sensor.garage_entry_door_sensor
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id:
+      - switch.garage_dimmer_switch
+    service: switch.turn_on
+- id: '1586392071810'
+  alias: Auto Lock Front Door
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.door_lock
+  condition: []
+  action:
+    service: lock.lock
+    entity_id: lock.front_door_lock_locked
+- id: '1586408953589'
+  alias: Start Door Lock Timer when door is unlocked
+  description: ''
+  trigger:
+  - device_id: 41f795a0a88846e7b13ecab18a965720
+    domain: lock
+    entity_id: lock.front_door_deadbolt_status
+    platform: device
+    type: unlocked
+  condition: []
+  action:
+  - data: {}
+    entity_id: timer.door_lock
+    service: timer.start
+- id: '1586494216845'
+  alias: Turn on the lights when the sun is set
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - device_id: 36e933232ba14fe896dc136164cfff7a
+    domain: light
+    entity_id: light.kitchen_dimmer_level
+    type: turn_on
+  - device_id: d053316949b04a8b853ba3a1b8199f95
+    domain: light
+    entity_id: light.lounge_dimmer_level
+    type: turn_on
+  - device_id: b17977721804422f8b99b9ec9168469b
+    domain: light
+    entity_id: light.dining_dimmer_level
+    type: turn_on
+  - device_id: 999e9d4e7da94858ab8ff18b164974df
+    domain: light
+    entity_id: light.tv_room_dimmer_level
+    type: turn_on
+- id: '1586508485630'
+  alias: Lock door after timer ends
+  description: ''
+  trigger:
+  - event_data:
+      entity_id: timer.door_lock
+    event_type: timer.finished
+    platform: event
+  condition: []
+  action:
+  - data: {}
+    entity_id: lock.front_door_deadbolt_status
+    service: lock.lock
+- id: '1586553031907'
+  alias: Turn off the lights when no-one is home
+  description: ''
+  trigger:
+  - entity_id: device_tracker.shanes_phone
+    platform: state
+    to: not_home
+  condition: []
+  action:
+  - device_id: 36e933232ba14fe896dc136164cfff7a
+    domain: switch
+    entity_id: switch.kitchen_dimmer_switch
+    type: turn_off
+- id: '1586553341096'
+  alias: Turn on the lights when someone comes home
+  description: ''
+  trigger:
+  - entity_id: device_tracker.shanes_phone
+    platform: state
+    to: home
+  condition: []
+  action:
+  - device_id: 36e933232ba14fe896dc136164cfff7a
+    domain: switch
+    entity_id: switch.kitchen_dimmer_switch
+    type: turn_on
+- id: '1586566879867'
+  alias: Turn off all lights
+  description: ''
+  trigger:
+  - entity_id: device_tracker.shanes_phone
+    platform: state
+    to: xxxxxx
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.dining_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.bookcase_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.garage_dimmer_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.kitchen_dimmer_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.laundry_lights
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.upstairs_tread_light_switch_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.deck_light_switch_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.front_door_wall_light_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.kids_dimmer_switch_switch_2
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.kitchen_splashback_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.kitchen_tasklights
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.nano_dimmer_master_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.office_dimmer_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.patio_lights_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.pool_lights
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.upstairs_tread_light_switch_switch
+    service: switch.turn_off
+  - data: {}
+    entity_id: switch.tv_room_switch
+    service: switch.turn_off
+- id: '1586647301102'
+  alias: Close cover if raining
+  description: ''
+  trigger:
+  - entity_id: sensor.dark_sky_precip_intensity
+    platform: state
+    to: raining
+  condition: []
+  action:
+  - data: {}
+    entity_id: cover.louvretec_shutter_level
+    service: cover.close_cover
+
+- id: Home_Assistant_Update_Notification
+  alias: Home Assistant Update Notification
+  hide_entity: false
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+    service: script.update_notification

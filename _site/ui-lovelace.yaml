@@ -21,25 +21,24 @@ views:
         entity: light.lounge_dimmer_level
       - type: light
         entity: light.garage_dimmer_level
-      - type: light
-        entity: light.garage_dimmer_level
+     
     
       - type: light
         entity: light.kids_dimmer_switch_level
       - type: entity-filter
         entities:
-          - device_tracker.shane
+          - device_tracker.shanes_phone
           - device_tracker.inga
         state_filter:
           - 'home'
-        card:
-          type: glance
-          title: People that are home
+        # card:
+        #   type: glance
+        #   title: People that are home
 
         # The picture entity card will represent an entity with a picture
       - type: picture-entity
         image: https://www.home-assistant.io/images/default-social.png
-        entity: light.master_dimmer
+        entity: light.master_dimmer_level
 
     # Specify a tab icon if you want the view tab to be an icon.
   - icon: mdi:home-assistant

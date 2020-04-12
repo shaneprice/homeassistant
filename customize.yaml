@@ -40,3 +40,4 @@ sensor.energy_year_fronius_inverter_1_http_192_168_1_41:
 
 sensor.energy_total_fronius_power_flow_0_http_192_168_1_41:
   friendly_name: Solar - Total Power Flow
+
